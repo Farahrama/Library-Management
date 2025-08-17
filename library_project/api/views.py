@@ -18,20 +18,15 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-    # بحث + ترتيب + فلترة
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    # فلترة عبر باراميتر 'available'
-    filterset_fields = ["isbn"]  # فلترة مباشرة على isbn، والباقي عبر search
-    # البحث في العنوان/المؤلف/ISBN
+    filterset_fields = ["isbn"]
     search_fields = ["title", "author", "isbn"]
-    # الترتيب المتاح
     ordering_fields = ["title", "published_date", "copies_available"]
 
     def get_queryset(self):
         qs = super().get_queryset()
         available = self.request.query_params.get("available")
         if available is not None:
-            # available=true => نسخ متاحة > 0
             if available.lower() in ["true", "1", "yes"]:
                 qs = qs.filter(copies_available__gt=0)
             elif available.lower() in ["false", "0", "no"]:
