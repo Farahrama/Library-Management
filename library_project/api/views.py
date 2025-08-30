@@ -39,3 +39,9 @@ class BookViewSet(viewsets.ModelViewSet):
         available = Book.objects.filter(copies_available__gt=0).count()
         return Response({"total": total, "available": available})
 # Create your views here.
+from django.shortcuts import render
+from .models import Book
+
+def book_list_view(request):
+    books = Book.objects.all()
+    return render(request, 'books_list.html', {'books': books})
