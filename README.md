@@ -31,6 +31,8 @@ SQLite / PostgreSQL (Database)
 ⚙️ Installation & Setup
 
 Clone the repository:
+**Author**: Farah Ramadan  
+**Email**: rafarah507@gmail.com
 
 git clone https://github.com/Farahrama/library-management-system-api.git
 cd library-management-system-api
