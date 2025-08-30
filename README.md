@@ -22,6 +22,17 @@ This project solves the basic workflow for a small library:
 - Add/search/list books
 - Borrow (checkout) and return
 - Track availability
+## Future Improvements
+
+Pagination & ordering
+
+Auth & roles (librarian vs member)
+
+Rate limiting & throttling
+
+Better search (icontains/multi-fields)
+
+Swagger/OpenAPI schema
 
 🛠️ Tech Stack
 
