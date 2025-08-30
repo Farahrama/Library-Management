@@ -44,15 +44,18 @@ Django REST Framework
 
 SQLite / PostgreSQL (Database)
 
-⚙️ Installation & Setup
+## Installation
 
-Clone the repository:
-**Author**: Farah Ramadan  
-**Email**: rafarah507@gmail.com
+```bash
+git clone https://github.com/Farahrama/Library-Management.git
+cd Library-Management
 
-git clone https://github.com/Farahrama/Library-Management
-cd library-management-system-api
+python -m venv env
+env\Scripts\activate
 
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 
 Create and activate a virtual environment:
 
