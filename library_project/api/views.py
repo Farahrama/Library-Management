@@ -45,3 +45,41 @@ from .models import Book
 def book_list_view(request):
     books = Book.objects.all()
     return render(request, 'books_list.html', {'books': books})
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def checkout_view(request):
+    if request.method == 'POST':
+        book_id = request.POST.get('book_id')
+        try:
+            book = Book.objects.get(id=book_id)
+            if book.copies_available > 0:
+                book.copies_available -= 1
+                book.save()
+                Borrowing.objects.create(user=request.user, book=book)
+                return render(request, 'checkout.html', {'message': 'تمت الإعارة بنجاح!'})
+            else:
+                return render(request, 'checkout.html', {'error': 'الكتاب غير متاح.'})
+        except Book.DoesNotExist:
+            return render(request, 'checkout.html', {'error': 'الكتاب غير موجود.'})
+    return render(request, 'checkout.html')
+from django.utils import timezone
+
+@login_required
+def return_view(request):
+    if request.method == 'POST':
+        book_id = request.POST.get('book_id')
+        try:
+            book = Book.objects.get(id=book_id)
+            borrowing = Borrowing.objects.filter(user=request.user, book=book, return_date__isnull=True).first()
+            if borrowing:
+                borrowing.return_date = timezone.now()
+                borrowing.save()
+                book.copies_available += 1
+                book.save()
+                return render(request, 'return.html', {'message': 'تم إرجاع الكتاب بنجاح!'})
+            else:
+                return render(request, 'return.html', {'error': 'لم يتم إعارة هذا الكتاب بواسطتك.'})
+        except Book.DoesNotExist:
+            return render(request, 'return.html', {'error': 'الكتاب غير موجود.'})
+    return render(request, 'return.html')

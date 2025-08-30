@@ -18,10 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from api.views import book_list_view
+from api.views import book_list_view, checkout_view
+from api.views import book_list_view, checkout_view, return_view
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('books/', book_list_view, name='book_list'),
+    path('checkout/', checkout_view, name='checkout'),
+    path('return/', return_view, name='return'),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 ]
