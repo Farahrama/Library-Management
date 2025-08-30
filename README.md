@@ -50,7 +50,7 @@ Clone the repository:
 **Author**: Farah Ramadan  
 **Email**: rafarah507@gmail.com
 
-git clone https://github.com/Farahrama/library-management-system-api.git
+git clone https://github.com/Farahrama/Library-Management
 cd library-management-system-api
 
 
