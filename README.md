@@ -17,6 +17,11 @@ Availability Tracking: Keeps track of the number of available copies.
 Search & Filters: Search books by title, author, or ISBN; filter by availability.
 
 Authentication: Supports login and user-specific borrowing history.
+## Purpose
+This project solves the basic workflow for a small library:
+- Add/search/list books
+- Borrow (checkout) and return
+- Track availability
 
 🛠️ Tech Stack
 
