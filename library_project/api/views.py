@@ -83,3 +83,51 @@ def return_view(request):
         except Book.DoesNotExist:
             return render(request, 'return.html', {'error': 'الكتاب غير موجود.'})
     return render(request, 'return.html')
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .models import Book, Borrowing
+from .serializers import BookSerializer, BorrowingSerializer
+from django.utils import timezone
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.db.models import Sum
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny()]
+        return [IsAuthenticated()]
+
+    @action(detail=False, methods=['post'], url_path='checkout')
+    def checkout(self, request):
+        book_id = request.data.get('book_id')
+        try:
+            book = Book.objects.get(id=book_id)
+            if book.copies_available > 0:
+                book.copies_available -= 1
+                book.save()
+                Borrowing.objects.create(user=request.user, book=book)
+                return Response({'status': 'Book borrowed successfully'})
+            return Response({'error': 'Book not available'}, status=400)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=404)
+
+    @action(detail=False, methods=['post'], url_path='return')
+    def return_book(self, request):
+        book_id = request.data.get('book_id')
+        try:
+            book = Book.objects.get(id=book_id)
+            borrowing = Borrowing.objects.filter(user=request.user, book=book, return_date__isnull=True).first()
+            if borrowing:
+                borrowing.return_date = timezone.now()
+                borrowing.save()
+                book.copies_available += 1
+                book.save()
+                return Response({'status': 'Book returned successfully'})
+            return Response({'error': 'Book not borrowed by this user'}, status=400)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=404)
