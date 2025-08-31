@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إرجاع كتاب</title>
+    <title>Book Return</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         h1 { color: #333; }
@@ -17,13 +17,13 @@
     </style>
 </head>
 <body>
-    <h1>إرجاع كتاب</h1>
-    <a href="/">العودة إلى الصفحة الرئيسية</a>
+    <h1>Book Return</h1>
+    <a href="/">Back to Home Page</a>
     <form method="post">
         {% csrf_token %}
-        <label for="book_id">رقم الكتاب (ID):</label>
+        <label for="book_id">Book ID:</label>
         <input type="number" id="book_id" name="book_id" required>
-        <input type="submit" value="إرجاع الكتاب">
+        <input type="submit" value="Book Return">
         {% if error %}
         <p class="error">{{ error }}</p>
         {% endif %}

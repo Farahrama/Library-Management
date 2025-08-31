@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قائمة الكتب</title>
+    <title>Book List</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         h1 { color: #333; }
@@ -15,17 +15,17 @@
     </style>
 </head>
 <body>
-    <h1>قائمة الكتب</h1>
-    <a href="/">العودة إلى الصفحة الرئيسية</a>
+     <h1>Book List</h1>
+    <a href="/">Back to Home Page</a>
     {% if books %}
     <table>
         <thead>
             <tr>
-                <th>العنوان</th>
-                <th>المؤلف</th>
+                <th>Address</th>
+                <th>Author</th>
                 <th>ISBN</th>
-                <th>تاريخ النشر</th>
-                <th>النسخ المتاحة</th>
+                <th>Published_date</th>
+                <th>Available copies</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +41,7 @@
         </tbody>
     </table>
     {% else %}
-    <p>لا توجد كتب متاحة.</p>
+    <p>NO books available.</p>
     {% endif %}
 </body>
 </html>
