@@ -1,5 +1,5 @@
 Library Management System
-
+Django-based web application for managing a small library, including book listings, borrowing, returning, and API endpoints
 Overview
 
 The Library Management System is a web application built with Django and Django REST Framework (DRF) to manage books, borrowing, and returning. It provides a RESTful API for book management and a simple web interface for browsing books, borrowing, and returning them.
