@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.AllowAny",
     ),
-    "EXCEPTION_HANDLER": "library_project.exceptions.custom_exception_handler",
+    'EXCEPTION_HANDLER': 'library_project.exceptions.custom_exception_handler',
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
     ),

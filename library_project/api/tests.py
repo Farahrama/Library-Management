@@ -22,9 +22,8 @@ class BookAPITest(APITestCase):
     def test_list_books(self):
         response = self.client.get('/api/books/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['title'], 'Test Book')
-
+        self.assertEqual(len(response.data['results']), 1, msg=f"Expected 1 book, got {len(response.data['results'])}: {response.data['results']}")
+        self.assertEqual(response.data['results'][0]['title'], 'Test Book')
     def test_create_book(self):
         data = {
             "title": "New Book",

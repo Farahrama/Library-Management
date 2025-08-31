@@ -98,9 +98,18 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
     def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
+        if self.action in ['list', 'retrieve', 'stats']:
             return [AllowAny()]
         return [IsAuthenticated()]
+
+    @action(detail=False, methods=['get'], url_path='stats')
+    def stats(self, request):
+        total_books = Book.objects.count()
+        available_copies = Book.objects.aggregate(total_copies=Sum('copies_available'))['total_copies'] or 0
+        return Response({
+            'total_books': total_books,
+            'available_copies': available_copies
+        })
 
     @action(detail=False, methods=['post'], url_path='checkout')
     def checkout(self, request):
